@@ -1,5 +1,7 @@
 # 🚀 AI-Powered Selenium Test Generator (OpenAI + Ollama)
 
+## Don't forget to give a :star: to make the project popular
+
 ## Generate **production-ready Selenium Java automation scripts** from plain English test cases using AI.
 
 This tool supports:
@@ -40,8 +42,8 @@ This tool supports:
 * Python 3.14+
 * pip
 Any one of these:
-* OpenAI API Key
-* Ollama installed locally
+  * OpenAI API Key
+  * Ollama installed locally
 
 ## 📥 Installation
 
@@ -88,8 +90,6 @@ OPENAI_API_KEY=your_api_key_here
 
 > ⚠️ Do not commit `.env` to GitHub
 
----
-
 ## 🧪 Input Test Case
 
 Edit the file:
@@ -111,8 +111,6 @@ Steps:
 5. Add an assert statement to check that "My Account" page is displayed.
 ```
 
----
-
 ## ⚡ Configuration
 
 Update `config.py` to choose your provider:
@@ -128,8 +126,6 @@ provider = "openai"
 ```python
 provider = "ollama"
 ```
-
----
 
 ## 🧠 Ollama Setup (Local Setup is required while using Ollama)
 
@@ -196,7 +192,7 @@ pip install -r requirements.txt
 ## 💡 Best Practices
 
 * When using OpenAI, Keep temperature low (0.2–0.3) for stable outputs
-* Use Ollama for unlimited local generation
+* Use Ollama for unlimited local test script generation
 * Use OpenAI for higher quality scripts
 * Never commit `.env` or `venv`
 
@@ -205,5 +201,3 @@ pip install -r requirements.txt
 - Discuss your queries by writing to me @ `mohammadfaisalkhatri@gmail.com`
   OR ping me on any of the social media sites using the below link:
     - [Linktree](https://linktr.ee/faisalkhatri)
-
-⭐ If you found this useful, please consider giving the repo a star!
