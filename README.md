@@ -96,7 +96,6 @@ Edit the file:
 
 ```
 test_cases/input/sample_test_case.txt
-```
 
 Title: Application Login scenario
 
@@ -135,25 +134,25 @@ Download from: https://ollama.com
 
 ### Start Ollama
 
-```
+```bash
 ollama serve
 ```
 
 ### Pull Model
 
-```
+```bash
 ollama pull deepseek-coder
 ```
 
 ### Run Model
 
-```
+```bash
 ollama run llama3
 ```
 
 ## ▶️ Run the Application
 
-```
+```bash
 python main.py
 ```
 
