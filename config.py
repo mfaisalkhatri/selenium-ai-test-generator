@@ -13,7 +13,7 @@ class OllamaConfig:
     model: str = "llama3"
     prompt: str = "You are a Selenium WebDriver test automation expert. Generate Selenium WebDriver Java test scripts. STRICTLY follow the format. Any deviation is not acceptable."
     stream: bool = False
-    temperature: float = 0.3cl
+    temperature: float = 0.3
     ollama_endpoint: str = "http://localhost:11434/api/generate"
 
 
