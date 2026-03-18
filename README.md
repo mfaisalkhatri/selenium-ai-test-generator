@@ -1,8 +1,6 @@
 # 🚀 AI-Powered Selenium Test Generator (OpenAI + Ollama)
 
-## Don't forget to give a :star: to make the project popular
-
-## Generate **production-ready Selenium Java automation scripts** from plain English test cases using AI.
+## Generate **Selenium Java automation scripts** from plain English test cases using AI.
 
 This tool supports:
 
@@ -14,7 +12,6 @@ This tool supports:
 * Generate Selenium WebDriver scripts using **Java + TestNG**
 * Follows **Page Object Model (POM)**
 * Generates:
-
   * Page Object classes
   * Test classes
   * `testng.xml`
@@ -200,3 +197,5 @@ pip install -r requirements.txt
 - Discuss your queries by writing to me @ `mohammadfaisalkhatri@gmail.com`
   OR ping me on any of the social media sites using the below link:
     - [Linktree](https://linktr.ee/faisalkhatri)
+
+## Don't forget to give a :star: to make the project popular
