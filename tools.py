@@ -30,10 +30,26 @@ Generate Selenium automation test script using the following requirements:
 - Follow Page Object Model (POM)
 - Use latest version of TestNG framework
 - Apply best coding practices
-- Generate Page Object files
-- Generate Test class
-- Generate testng.xml
 - Add comments explaining each step
+
+IMPORTANT: You MUST follow the exact output format below.
+
+Rules:
+- ALWAYS start each file with ===FILE: filename===
+- Use class names based on the use case (e.g., LoginPage.java, HomePage.java, etc.)
+- Do NOT add explanations outside file blocks
+- DO NOT skip this format
+- If you do not follow this format, the output will be rejected
+
+- Generate the following files:
+OUTPUT FORMAT (STRICT):
+===FILE: filename===
+file content
+
+  - Multiple Page Object classes(if needed)
+  - Test class
+  - testng.xml
+  - README.md(Include use case text and steps to run the test)
 
 Use Case:
 {use_case_text}
@@ -81,3 +97,33 @@ def generate_selenium_test_script(test_case_text: str) -> Optional[str]:
 
     else:
         raise ValueError(f"Unsupported provider: {provider}")
+
+def split_and_save_files(generated_text: str, base_output_path: Path) -> None:
+
+        sections = generated_text.split("===FILE:")
+        if len(sections)<=1:
+            raise ValueError ("No Structured files found in AI response!")
+        
+        pageobject_dir = base_output_path/"pageobjects"
+        pageobject_dir.mkdir(parents=True, exist_ok=True)
+
+        for section in sections[1:]:
+            section = section.strip()
+            parts = section.split("\n",1)
+            raw_filename = parts[0].strip()
+            
+            filename =  raw_filename.replace("===", "").strip().split()[0]
+            
+            content = parts[1].strip() if len(parts)>1 else ""
+            content = content.split("===FILE:")[0].strip()
+            
+            if filename.endswith("Page.java"):
+                file_path = pageobject_dir / filename
+                
+            else:
+                file_path = base_output_path / filename
+
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(content)
+
+            print(f"✅ Created: {file_path}")

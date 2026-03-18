@@ -13,7 +13,7 @@ This tool supports:
 * Follows **Page Object Model (POM)**
 * Generates:
   * Page Object classes
-  * Test classes
+  * Test class
   * `testng.xml`
 * Config-driven architecture (switch models easily)
 * Supports both **cloud and local LLMs**
@@ -47,8 +47,8 @@ Any one of these:
 ### 1. Clone the Repository
 
 ```
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone git@github.com:mfaisalkhatri/selenium-ai-test-generator.git
+cd selenium-ai-test-generator
 ```
 
 ### 2. Create Virtual Environment
@@ -141,8 +141,7 @@ ollama serve
 ollama pull deepseek-coder
 ```
 
-### Run Model
-
+### Run Model(Optional Step)
 ```bash
 ollama run llama3
 ```
@@ -158,7 +157,7 @@ python main.py
 Generated Selenium test script will be saved at:
 
 ```
-test_cases/output/selenium_automation_test.java
+test_cases/output/
 ```
 
 ## ❗ Troubleshooting
@@ -176,7 +175,7 @@ provider = "ollama"
 * Ensure Ollama is running:
 
 ```
-ollama run llama3
+ollama serve
 ```
 
 ### 🔴 Module Not Found Errors
@@ -198,4 +197,4 @@ pip install -r requirements.txt
   OR ping me on any of the social media sites using the below link:
     - [Linktree](https://linktr.ee/faisalkhatri)
 
-## Don't forget to give a :star: to make the project popular
+### Don't forget to give a :star: to make the project popular
