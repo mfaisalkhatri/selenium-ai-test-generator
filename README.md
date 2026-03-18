@@ -154,7 +154,7 @@ python main.py
 
 ## 📄 Output
 
-Generated Selenium test script will be saved at:
+Generated Selenium WebDriver test automation scripts are stored in a newly created folder named using the current date and time, located at:
 
 ```
 test_cases/output/

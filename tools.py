@@ -6,6 +6,7 @@ from typing import Optional
 from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
+from datetime import datetime
 
 from config import config
 
@@ -37,7 +38,7 @@ IMPORTANT: You MUST follow the exact output format below.
 
 Rules:
 - ALWAYS start each file with ===FILE: filename===
-- Use class names based on the web page(e.g. HomPage.java, LoginPage.java, etc. These names are for instructions only, use class name specific to the web page)
+- Use class names based on the web page(e.g. HomPage.java, LoginPage.java, etc. These names are for instructions only, use class name specific to the web page, do not add "Page" to the test class name)
 - Do NOT add explanations outside file blocks
 - DO NOT skip this format
 - If you do not follow this format, the output will be rejected
@@ -102,6 +103,13 @@ def generate_selenium_test_script(test_case_text: str) -> Optional[str]:
     else:
         raise ValueError(f"Unsupported provider: {provider}")
 
+def create_timestamped_output_dir(base_output_path: Path) -> Path:
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    output_dir = base_output_path / timestamp
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
+
+
 def split_and_save_files(generated_text: str, base_output_path: Path) -> None:
 
         sections = generated_text.split("===FILE:")
@@ -123,7 +131,6 @@ def split_and_save_files(generated_text: str, base_output_path: Path) -> None:
             
             if filename.endswith("Page.java"):
                 file_path = pageobject_dir / filename
-                
             else:
                 file_path = base_output_path / filename
 

@@ -7,4 +7,4 @@ Steps:
 2. Navigate to https://ecommerce-playground.lambdatest.io/index.php
 3. Enter "iPhone" in the Search text box
 4. Click on the Search Button
-5. Wait for the Search Result page to load, and assert that the search results page show the product "iPhone"
+5. Add an assert statement to verify that the the product "iPhone" is displayed
