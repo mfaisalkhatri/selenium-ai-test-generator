@@ -1,10 +1,12 @@
 import os
 import requests
+import re
 
 from typing import Optional
 from pathlib import Path
 from dotenv import load_dotenv
 from openai import OpenAI
+from datetime import datetime
 
 from config import config
 
@@ -30,10 +32,30 @@ Generate Selenium automation test script using the following requirements:
 - Follow Page Object Model (POM)
 - Use latest version of TestNG framework
 - Apply best coding practices
-- Generate Page Object files
-- Generate Test class
-- Generate testng.xml
 - Add comments explaining each step
+
+IMPORTANT: You MUST follow the exact output format below.
+
+Rules:
+- ALWAYS start each file with ===FILE: filename===
+- Use class names based on the web page(e.g. HomPage.java, LoginPage.java, etc. These names are for instructions only, use class name specific to the web page, do not add "Page" to the test class name)
+- Do NOT add explanations outside file blocks
+- DO NOT skip this format
+- If you do not follow this format, the output will be rejected
+- DO NOT use markdown (no **, no ``` blocks)
+- DO NOT add file names outside ===FILE: markers
+- ONLY use ===FILE: filename=== format
+- OUTPUT FORMAT FOR FILES(STRICT):
+    ===FILE: filename===
+    file content
+
+
+- The following files MUST only be generated in the same order(STRICT). No deviation is acceptable:
+  - Multiple Page Object classes(if needed) (Strictly Page object class, no WebDriver instantiation in this classes, Do not create duplicate page object classes)
+  - Test class(WebDriver should be instantiated in this class, Do not use WebDriverManager)
+  - testng.xml
+  - README.md (Include notes and steps to run the test)
+  
 
 Use Case:
 {use_case_text}
@@ -67,7 +89,6 @@ def generate_with_ollama(prompt: str) -> str:
 
     return data.get("response", "")
 
-
 def generate_selenium_test_script(test_case_text: str) -> Optional[str]:
     prompt = build_prompt(test_case_text)
 
@@ -81,3 +102,39 @@ def generate_selenium_test_script(test_case_text: str) -> Optional[str]:
 
     else:
         raise ValueError(f"Unsupported provider: {provider}")
+
+def create_timestamped_output_dir(base_output_path: Path) -> Path:
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    output_dir = base_output_path / timestamp
+    output_dir.mkdir(parents=True, exist_ok=True)
+    return output_dir
+
+
+def split_and_save_files(generated_text: str, base_output_path: Path) -> None:
+
+        sections = generated_text.split("===FILE:")
+        if len(sections)<=1:
+            raise ValueError ("No Structured files found in AI response!")
+        
+        pageobject_dir = base_output_path/"pageobjects"
+        pageobject_dir.mkdir(parents=True, exist_ok=True)
+
+        for section in sections[1:]:
+            section = section.strip()
+            parts = section.split("\n",1)
+            raw_filename = parts[0].strip()
+            
+            filename =  raw_filename.replace("===", "").strip().split()[0]
+            
+            content = parts[1].strip() if len(parts)>1 else ""
+            content = content.split("===FILE:")[0].strip()
+            
+            if filename.endswith("Page.java"):
+                file_path = pageobject_dir / filename
+            else:
+                file_path = base_output_path / filename
+
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(content)
+
+            print(f"✅ Created: {file_path}")

@@ -1,8 +1,6 @@
 # 🚀 AI-Powered Selenium Test Generator (OpenAI + Ollama)
 
-## Don't forget to give a :star: to make the project popular
-
-## Generate **production-ready Selenium Java automation scripts** from plain English test cases using AI.
+## Generate **Selenium Java automation scripts** from plain English test cases using AI.
 
 This tool supports:
 
@@ -14,10 +12,9 @@ This tool supports:
 * Generate Selenium WebDriver scripts using **Java + TestNG**
 * Follows **Page Object Model (POM)**
 * Generates:
-
   * Page Object classes
-  * Test classes
-  * `testng.xml`
+  * Test class
+  * testng.xml
 * Config-driven architecture (switch models easily)
 * Supports both **cloud and local LLMs**
 * Beginner-friendly and extensible
@@ -41,7 +38,7 @@ This tool supports:
 
 * Python 3.14+
 * pip
-Any one of these:
+* Any one of these:
   * OpenAI API Key
   * Ollama installed locally
 
@@ -50,8 +47,8 @@ Any one of these:
 ### 1. Clone the Repository
 
 ```
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone git@github.com:mfaisalkhatri/selenium-ai-test-generator.git
+cd selenium-ai-test-generator
 ```
 
 ### 2. Create Virtual Environment
@@ -144,8 +141,7 @@ ollama serve
 ollama pull deepseek-coder
 ```
 
-### Run Model
-
+### Run Model(Optional Step)
 ```bash
 ollama run llama3
 ```
@@ -158,10 +154,10 @@ python main.py
 
 ## 📄 Output
 
-Generated Selenium test script will be saved at:
+Generated Selenium WebDriver test automation scripts are stored in a newly created folder named using the current date and time, located at:
 
 ```
-test_cases/output/selenium_automation_test.java
+test_cases/output/
 ```
 
 ## ❗ Troubleshooting
@@ -179,7 +175,7 @@ provider = "ollama"
 * Ensure Ollama is running:
 
 ```
-ollama run llama3
+ollama serve
 ```
 
 ### 🔴 Module Not Found Errors
@@ -200,3 +196,5 @@ pip install -r requirements.txt
 - Discuss your queries by writing to me @ `mohammadfaisalkhatri@gmail.com`
   OR ping me on any of the social media sites using the below link:
     - [Linktree](https://linktr.ee/faisalkhatri)
+
+### Don't forget to give a :star: to make the project popular
