@@ -14,7 +14,7 @@ This tool supports:
 * Generates:
   * Page Object classes
   * Test class
-  * `testng.xml`
+  * testng.xml
 * Config-driven architecture (switch models easily)
 * Supports both **cloud and local LLMs**
 * Beginner-friendly and extensible
@@ -38,7 +38,7 @@ This tool supports:
 
 * Python 3.14+
 * pip
-Any one of these:
+* Any one of these:
   * OpenAI API Key
   * Ollama installed locally
 
