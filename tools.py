@@ -1,5 +1,6 @@
 import os
 import requests
+import re
 
 from typing import Optional
 from pathlib import Path
@@ -36,20 +37,24 @@ IMPORTANT: You MUST follow the exact output format below.
 
 Rules:
 - ALWAYS start each file with ===FILE: filename===
-- Use class names based on the use case (e.g., LoginPage.java, HomePage.java, etc.)
+- Use class names based on the web page(e.g. HomPage.java, LoginPage.java, etc. These names are for instructions only, use class name specific to the web page)
 - Do NOT add explanations outside file blocks
 - DO NOT skip this format
 - If you do not follow this format, the output will be rejected
+- DO NOT use markdown (no **, no ``` blocks)
+- DO NOT add file names outside ===FILE: markers
+- ONLY use ===FILE: filename=== format
+- OUTPUT FORMAT FOR FILES(STRICT):
+    ===FILE: filename===
+    file content
 
-- Generate the following files:
-OUTPUT FORMAT (STRICT):
-===FILE: filename===
-file content
 
-  - Multiple Page Object classes(if needed)
-  - Test class
+- The following files MUST only be generated in the same order(STRICT). No deviation is acceptable:
+  - Multiple Page Object classes(if needed) (Strictly Page object class, no WebDriver instantiation in this classes, Do not create duplicate page object classes)
+  - Test class(WebDriver should be instantiated in this class, Do not use WebDriverManager)
   - testng.xml
-  - README.md(Include use case text and steps to run the test)
+  - README.md (Include notes and steps to run the test)
+  
 
 Use Case:
 {use_case_text}
@@ -82,7 +87,6 @@ def generate_with_ollama(prompt: str) -> str:
     data = response.json()
 
     return data.get("response", "")
-
 
 def generate_selenium_test_script(test_case_text: str) -> Optional[str]:
     prompt = build_prompt(test_case_text)
