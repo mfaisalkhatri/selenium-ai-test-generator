@@ -1,10 +1,11 @@
-Title: Search for a Product on Home Page
+Title: Application Login scenario
 
-Precondition: User is on the Home Page of the application
+Precondition: User is registered in the application.
 
 Steps:
 1. Open Chrome browser
-2. Navigate to https://ecommerce-playground.lambdatest.io/index.php
-3. Enter "iPhone" in the Search text box
-4. Click on the Search Button
-5. Add an assert statement to verify that the the product "iPhone" is displayed
+2. Navigate to https://ecommerce-playground.lambdatest.io/index.php?route=account/login
+3. Enter "Johndoe881@email.com" in the E-Mail Address field
+4. Enter "Password@321" in the Password field
+5. Click on the Login Button
+5. Add an assert statement to check that "My Account" page is displayed

@@ -38,7 +38,8 @@ IMPORTANT: You MUST follow the exact output format below.
 
 Rules:
 - ALWAYS start each file with ===FILE: filename===
-- Use class names based on the web page(e.g. HomPage.java, LoginPage.java, etc. These names are for instructions only, use class name specific to the web page, do not add "Page" to the test class name)
+- Use class names based on the web page(e.g. HomPage.java, LoginPage.java, etc. These names are for instructions only, use class name specific to the web page)
+- Do not add "Page" to the test class name
 - Do NOT add explanations outside file blocks
 - DO NOT skip this format
 - If you do not follow this format, the output will be rejected
@@ -49,14 +50,12 @@ Rules:
     ===FILE: filename===
     file content
 
-
 - The following files MUST only be generated in the same order(STRICT). No deviation is acceptable:
-  - Multiple Page Object classes(if needed) (Strictly Page object class, no WebDriver instantiation in this classes, Do not create duplicate page object classes)
-  - Test class(WebDriver should be instantiated in this class, Do not use WebDriverManager)
-  - testng.xml
-  - README.md (Include notes and steps to run the test)
+  - Multiple Page Object classes(if needed) (Strictly Page object class, no WebDriver instantiation in these classes, Do not create duplicate page object classes)
+  - Test class(WebDriver should be instantiated in the Test class, Do not use WebDriverManager to instantiate WebDriver, Use TestNG's @BeforeMethod annotation and define a method to instantiate the WebDriver, Use TestNG's @AfterMethod to quit the WebDriver)
+  - testng.xml(Follow correct structure as per TestNG guidelines)
+  - README.md (Include notes and steps to run the test using testng.xml file)
   
-
 Use Case:
 {use_case_text}
 """
@@ -67,7 +66,7 @@ def generate_with_openai(prompt: str) -> Optional[str]:
         temperature=config.openai.temperature,
         max_tokens=config.openai.max_tokens,
         messages=[
-            {"role": "system", "content": "You generate Selenium WebDriver test automation automation scripts using Java."},
+            {"role": "system", "content": "You are a Selenium WebDriver test automation expert. Generate Selenium WebDriver Java test scripts. STRICTLY follow the format. Any deviation is not acceptable."},
             {"role": "user", "content": prompt},
         ],
     )
