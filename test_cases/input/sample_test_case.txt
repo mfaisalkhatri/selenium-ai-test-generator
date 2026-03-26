@@ -8,4 +8,4 @@ Steps:
 3. Enter "Johndoe881@email.com" in the E-Mail Address field
 4. Enter "Password@321" in the Password field
 5. Click on the Login Button
-5. Add an assert statement to check that "My Account" page is displayed.
+5. Add an assert statement to check that "My Account" page is displayed
