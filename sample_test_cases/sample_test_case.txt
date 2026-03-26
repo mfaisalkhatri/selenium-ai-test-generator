@@ -1,0 +1,10 @@
+Title: Search for a Product on Home Page
+
+Precondition: User is on the Home Page of the application
+
+Steps:
+1. Open Chrome browser
+2. Navigate to https://ecommerce-playground.lambdatest.io/index.php
+3. Enter "iPhone" in the Search text box
+4. Click on the Search Button
+5. Add an assert statement to verify that the the product "iPhone" is displayed
