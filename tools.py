@@ -51,7 +51,7 @@ Rules:
 
 
 - The following files MUST only be generated in the same order(STRICT). No deviation is acceptable:
-  - Multiple Page Object classes(if needed) (Strictly Page object class, no WebDriver instantiation in this classes, Do not create duplicate page object classes)
+  - Multiple Page Object classes(if needed) (Strictly Page object class, no WebDriver instantiation in these classes, Do not create duplicate page object classes)
   - Test class(WebDriver should be instantiated in this class, Do not use WebDriverManager)
   - testng.xml
   - README.md (Include notes and steps to run the test)
@@ -67,7 +67,7 @@ def generate_with_openai(prompt: str) -> Optional[str]:
         temperature=config.openai.temperature,
         max_tokens=config.openai.max_tokens,
         messages=[
-            {"role": "system", "content": "You generate Selenium WebDriver test automation automation scripts using Java."},
+            {"role": "system", "content": "You generate Selenium WebDriver test automation scripts using Java."},
             {"role": "user", "content": prompt},
         ],
     )
