@@ -31,6 +31,7 @@ class OllamaConfig:
     prompt: str = "You are a Selenium WebDriver test automation expert. Generate Selenium WebDriver Java test scripts. STRICTLY follow the format. Any deviation is not acceptable."
     stream: bool = False
     temperature: float = float(os.getenv("OLLAMA_TEMPERATURE", "0.3"))
+    ollama_baseurl:str = os.getenv("OLLAMA_BASEURL", "http://localhost:11434")
     ollama_endpoint: str = os.getenv("OLLAMA_ENDPOINT", "http://localhost:11434/api/generate")
 
 @dataclass

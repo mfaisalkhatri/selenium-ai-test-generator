@@ -4,32 +4,95 @@ from config import config
 from typing import Optional
 from pathlib import Path
 from datetime import datetime
+from logger import logger
+
+import requests
+
+from config import config
+from logger import logger
 
 
+def check_llm_connection() -> bool:
+    provider = config.provider.lower()
+
+    logger.info(f"Checking {provider} connection...")
+
+    if provider == "ollama":
+        try:
+            response = requests.get(
+                config.ollama.ollama_baseurl + "/api/tags",
+                timeout=5,
+            )
+
+            response.raise_for_status()
+
+            logger.info("✅ Ollama connection successful.")
+            return True
+
+        except requests.exceptions.ConnectionError:
+            logger.error(
+                "❌ Unable to connect to Ollama. "
+                "Make sure Ollama is running."
+            )
+            return False
+
+        except requests.exceptions.Timeout:
+            logger.error("❌ Ollama connection timed out.")
+            return False
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f"❌ Ollama health check failed: {e}")
+            return False
+
+    elif provider == "openai":
+        try:
+            config.openai.client.models.list()
+
+            logger.info("✅ OpenAI connection successful.")
+            return True
+
+        except Exception as e:
+            logger.error(f"❌ OpenAI connection failed: {e}")
+            return False
+
+    else:
+        logger.error(f"❌ Unsupported provider: {provider}")
+        return False
 
 def load_test_case_from_file(file_path: str | Path) -> str:
+    logger.info(f"Loading test case from: {file_path}")
+
     try:
         with open(file_path, "r", encoding="utf-8") as file:
-            return file.read()
+            content = file.read()
+
+        logger.info(f"Test case loaded successfully ({len(content)} characters)")
+        return content
+
     except FileNotFoundError:
+        logger.error(f"Test case file not found: {file_path}")
         raise FileNotFoundError(f"Test case file not found: {file_path}")
     except Exception as e:
+        logger.exception(f"Error reading test case file: {e}")
         raise RuntimeError(f"Error reading test case file: {e}")
 
 def build_prompt(use_case_text: str) -> str:
-    return f"""
+    logger.info("Building AI prompt")
+    prompt = f"""
 You are a test automation expert specializing in Selenium WebDriver with Java.
 
-Generate Selenium automation test script using the following requirements:
+Generate Selenium automation test script using the following instructions and skills:
 - Use Java 17 to write the code
 - Use latest Selenium WebDriver Java dependency version to write code
-- Do not write code to add ChromeWebDriver path in the test
+- Do not write code statement "System.setProperty()" to add chromedriver path, in the tests
 - Follow Page Object Model (POM)
 - Use latest version of TestNG dependency
-- Apply best coding practices
+- Apply best coding practices for writing Java code
 - Add comments explaining each step
 - Add assertions using TestNG assertion
 - Do not add random assertion statements in the code
+- Do not mention any text in README that says that ChromeDriver path should be added to the Path
+- Never use brittle XPATH and CSS Selectors selectors such as .btn-primary, .container > div:nth-child(2), #content div span, or auto-generated classes.
 
 IMPORTANT: You MUST follow the exact output format below.
 
@@ -54,13 +117,13 @@ Rules:
   - Do not add random assertion statements in the code
   - testng.xml(Follow correct structure as per TestNG guidelines)
   - README.md (Include notes and steps to run the test using testng.xml file)
-  - Do not mention to include ChromeDriver Path in ReadMe
-  - Use id, name, classname, linktext, partiallinktext, tagname, and CSs Selector as first priority locator strategy to locate web elements
-  - Never use brittle XPATH and CSS Selectors selectors such as .btn-primary, .container > div:nth-child(2), #content div span, or auto-generated classes.
   
 Use Case:
 {use_case_text}
 """
+    logger.info(f"Prompt created ({len(prompt)} characters)")
+    return prompt
+
 
 def generate_with_openai(prompt: str) -> Optional[str]:
     response = config.openai.client.chat.completions.create(
@@ -76,6 +139,10 @@ def generate_with_openai(prompt: str) -> Optional[str]:
     return response.choices[0].message.content
 
 def generate_with_ollama(prompt: str) -> str:
+    logger.info(
+        f"Generating test code with Ollama model: {config.ollama.model}"
+    )
+
     response = requests.post(
         config.ollama.ollama_endpoint,
         json={
@@ -87,27 +154,38 @@ def generate_with_ollama(prompt: str) -> str:
 
     response.raise_for_status()
     data = response.json()
+    generated_text = data.get("response", "")
 
-    return data.get("response", "")
+    logger.info(
+        f"Ollama generation completed ({len(generated_text)} characters)"
+    )
+
+    return generated_text
 
 def generate_selenium_test_script(test_case_text: str) -> Optional[str]:
+    logger.info("Starting Selenium test generation")
     prompt = build_prompt(test_case_text)
 
     provider = config.provider.lower()
+    logger.info(f"Using AI provider: {provider}")
 
     if provider == "openai":
+        logger.info("Sending prompt to OpenAI")
         return generate_with_openai(prompt)
 
     elif provider == "ollama":
+        logger.info("Sending prompt to Ollama")
         return generate_with_ollama(prompt)
 
     else:
+        logger.error(f"Unsupported provider: {provider}")
         raise ValueError(f"Unsupported provider: {provider}")
 
 def create_timestamped_output_dir(base_output_path: Path) -> Path:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     output_dir = base_output_path / timestamp
     output_dir.mkdir(parents=True, exist_ok=True)
+    logger.info(f"Created output directory: {output_dir}")
     return output_dir
 
 
@@ -115,8 +193,10 @@ def split_and_save_files(generated_text: str, base_output_path: Path) -> None:
 
         sections = generated_text.split("===FILE:")
         if len(sections)<=1:
+            logger.error("No structured files found in AI response")
             raise ValueError ("No Structured files found in AI response!")
-        
+
+        logger.info(f"Found {len(sections) - 1} generated files")
         pageobject_dir = base_output_path/"pageobjects"
         pageobject_dir.mkdir(parents=True, exist_ok=True)
 
@@ -135,7 +215,9 @@ def split_and_save_files(generated_text: str, base_output_path: Path) -> None:
             else:
                 file_path = base_output_path / filename
 
+            logger.info(f"Writing file: {file_path}")
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-            print(f"✅ Created: {file_path}")
+            logger.info(f"Created: {file_path} ({len(content)} characters)")
+            

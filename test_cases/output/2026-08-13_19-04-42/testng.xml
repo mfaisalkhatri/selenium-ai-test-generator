@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Parabank Registration Test">
+    <test name="Registration Test">
+        <classes>
+            <class name="TestRegistration"/>
+        </classes>
+    </test>
+</suite>
