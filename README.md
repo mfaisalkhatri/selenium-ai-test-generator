@@ -141,9 +141,20 @@ ollama serve
 ollama pull deepseek-coder
 ```
 
+OR
+
+```bash
+ollama pull qwen3:8b
+```
+
 ### Run Model(Optional Step)
 ```bash
 ollama run llama3
+```
+
+OR 
+```bash
+ollama run qwen3:8b
 ```
 
 ## ▶️ Run the Application
