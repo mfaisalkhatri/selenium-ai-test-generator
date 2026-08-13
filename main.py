@@ -3,7 +3,7 @@ import re
 from tools import load_test_case_from_file, generate_selenium_test_script,split_and_save_files,create_timestamped_output_dir
 from config import config
 from pathlib import Path
-
+from logger import logger
 
 def main() -> None:
     try:
@@ -14,6 +14,7 @@ def main() -> None:
         use_case_text = load_test_case_from_file(input_file)
 
         if not use_case_text:
+            logger.error("Test case file is empty.")
             raise ValueError("Test case file is empty.")
 
         generated_output = generate_selenium_test_script(use_case_text)
@@ -23,10 +24,8 @@ def main() -> None:
 
         split_and_save_files(generated_output,run_output_dir)
 
-        print(f"✅ Selenium WebDriver Java test automation scripts generated successfully at: {run_output_dir}")
-
     except Exception as e:
-        print(f"❌ Error occurred: {e}")
+        logger.error(f"❌ Error occurred while generating output files: {e}")
 
 if __name__ == "__main__":
     main()
