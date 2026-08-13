@@ -1,18 +1,11 @@
-import os
 import requests
-import re
-
-from typing import Optional
-from pathlib import Path
-from dotenv import load_dotenv
-from openai import OpenAI
-from datetime import datetime
 
 from config import config
+from typing import Optional
+from pathlib import Path
+from datetime import datetime
 
-load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def load_test_case_from_file(file_path: str | Path) -> str:
     try:
@@ -33,6 +26,8 @@ Generate Selenium automation test script using the following requirements:
 - Use latest version of TestNG framework
 - Apply best coding practices
 - Add comments explaining each step
+- Add assertions using TestNG assertion
+- Do not add random assertion statements in the code
 
 IMPORTANT: You MUST follow the exact output format below.
 
@@ -53,6 +48,8 @@ Rules:
 - The following files MUST only be generated in the same order(STRICT). No deviation is acceptable:
   - Multiple Page Object classes(if needed) (Strictly Page object class, no WebDriver instantiation in these classes, Do not create duplicate page object classes)
   - Test class(WebDriver should be instantiated in the Test class, Do not use WebDriverManager to instantiate WebDriver, Use TestNG's @BeforeMethod annotation and define a method to instantiate the WebDriver, Use TestNG's @AfterMethod to quit the WebDriver)
+  - Add assertions using TestNG assertion
+  - Do not add random assertion statements in the code
   - testng.xml(Follow correct structure as per TestNG guidelines)
   - README.md (Include notes and steps to run the test using testng.xml file)
   
@@ -61,7 +58,7 @@ Use Case:
 """
 
 def generate_with_openai(prompt: str) -> Optional[str]:
-    response = client.chat.completions.create(
+    response = config.openai.client.chat.completions.create(
         model=config.openai.model_name,
         temperature=config.openai.temperature,
         max_tokens=config.openai.max_tokens,
