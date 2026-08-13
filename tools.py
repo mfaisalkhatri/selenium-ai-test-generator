@@ -21,9 +21,9 @@ def build_prompt(use_case_text: str) -> str:
 You are a test automation expert specializing in Selenium WebDriver with Java.
 
 Generate Selenium automation test script using the following requirements:
-- Use latest Selenium WebDriver with Java
+- Use latest Selenium WebDriver Java dependency version to write code
 - Follow Page Object Model (POM)
-- Use latest version of TestNG framework
+- Use latest version of TestNG dependency
 - Apply best coding practices
 - Add comments explaining each step
 - Add assertions using TestNG assertion
