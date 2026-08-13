@@ -91,8 +91,7 @@ Generate Selenium automation test script using the following instructions and sk
 - Add comments explaining each step
 - Add assertions using TestNG assertion
 - Do not add random assertion statements in the code
-- Do not mention to include ChromeDriver Path in ReadMe
-- Use id, name, classname and CSS Selectors as first priority locator strategy to locate web elements
+- Do not mention any text in README that says that ChromeDriver path should be added to the Path
 - Never use brittle XPATH and CSS Selectors selectors such as .btn-primary, .container > div:nth-child(2), #content div span, or auto-generated classes.
 
 IMPORTANT: You MUST follow the exact output format below.
