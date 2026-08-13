@@ -21,7 +21,9 @@ def build_prompt(use_case_text: str) -> str:
 You are a test automation expert specializing in Selenium WebDriver with Java.
 
 Generate Selenium automation test script using the following requirements:
+- Use Java 17 to write the code
 - Use latest Selenium WebDriver Java dependency version to write code
+- Do not write code to add ChromeWebDriver path in the test
 - Follow Page Object Model (POM)
 - Use latest version of TestNG dependency
 - Apply best coding practices
@@ -52,6 +54,9 @@ Rules:
   - Do not add random assertion statements in the code
   - testng.xml(Follow correct structure as per TestNG guidelines)
   - README.md (Include notes and steps to run the test using testng.xml file)
+  - Do not mention to include ChromeDriver Path in ReadMe
+  - Use id, name, classname, linktext, partiallinktext, tagname, and CSs Selector as first priority locator strategy to locate web elements
+  - Never use brittle XPATH and CSS Selectors selectors such as .btn-primary, .container > div:nth-child(2), #content div span, or auto-generated classes.
   
 Use Case:
 {use_case_text}
