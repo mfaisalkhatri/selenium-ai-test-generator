@@ -6,6 +6,58 @@ from pathlib import Path
 from datetime import datetime
 from logger import logger
 
+import requests
+
+from config import config
+from logger import logger
+
+
+def check_llm_connection() -> bool:
+    provider = config.provider.lower()
+
+    logger.info(f"Checking {provider} connection...")
+
+    if provider == "ollama":
+        try:
+            response = requests.get(
+                config.ollama.ollama_baseurl + "/api/tags",
+                timeout=5,
+            )
+
+            response.raise_for_status()
+
+            logger.info("✅ Ollama connection successful.")
+            return True
+
+        except requests.exceptions.ConnectionError:
+            logger.error(
+                "❌ Unable to connect to Ollama. "
+                "Make sure Ollama is running."
+            )
+            return False
+
+        except requests.exceptions.Timeout:
+            logger.error("❌ Ollama connection timed out.")
+            return False
+
+        except requests.exceptions.RequestException as e:
+            logger.error(f"❌ Ollama health check failed: {e}")
+            return False
+
+    elif provider == "openai":
+        try:
+            config.openai.client.models.list()
+
+            logger.info("✅ OpenAI connection successful.")
+            return True
+
+        except Exception as e:
+            logger.error(f"❌ OpenAI connection failed: {e}")
+            return False
+
+    else:
+        logger.error(f"❌ Unsupported provider: {provider}")
+        return False
 
 def load_test_case_from_file(file_path: str | Path) -> str:
     logger.info(f"Loading test case from: {file_path}")
@@ -29,16 +81,19 @@ def build_prompt(use_case_text: str) -> str:
     prompt = f"""
 You are a test automation expert specializing in Selenium WebDriver with Java.
 
-Generate Selenium automation test script using the following requirements:
+Generate Selenium automation test script using the following instructions and skills:
 - Use Java 17 to write the code
 - Use latest Selenium WebDriver Java dependency version to write code
-- Do not write code to add ChromeWebDriver path in the test
+- Do not write code statement "System.setProperty()" to add chromedriver path, in the tests
 - Follow Page Object Model (POM)
 - Use latest version of TestNG dependency
-- Apply best coding practices
+- Apply best coding practices for writing Java code
 - Add comments explaining each step
 - Add assertions using TestNG assertion
 - Do not add random assertion statements in the code
+- Do not mention to include ChromeDriver Path in ReadMe
+- Use id, name, classname and CSS Selectors as first priority locator strategy to locate web elements
+- Never use brittle XPATH and CSS Selectors selectors such as .btn-primary, .container > div:nth-child(2), #content div span, or auto-generated classes.
 
 IMPORTANT: You MUST follow the exact output format below.
 
@@ -63,9 +118,6 @@ Rules:
   - Do not add random assertion statements in the code
   - testng.xml(Follow correct structure as per TestNG guidelines)
   - README.md (Include notes and steps to run the test using testng.xml file)
-  - Do not mention to include ChromeDriver Path in ReadMe
-  - Use id, name, classname, linktext, partiallinktext, tagname, and CSs Selector as first priority locator strategy to locate web elements
-  - Never use brittle XPATH and CSS Selectors selectors such as .btn-primary, .container > div:nth-child(2), #content div span, or auto-generated classes.
   
 Use Case:
 {use_case_text}
@@ -169,6 +221,4 @@ def split_and_save_files(generated_text: str, base_output_path: Path) -> None:
                 f.write(content)
 
             logger.info(f"Created: {file_path} ({len(content)} characters)")
-
-            logger.info("✅ All generated files savedsuccessfully")
             
