@@ -179,6 +179,11 @@ ollama run qwen3:8b
 python main.py
 ```
 
+<div align="left">
+<img src="assets/execution_details.png" width="400" height="150"/>
+</div>
+
+
 ## 📄 Output
 
 Generated Selenium WebDriver test automation scripts are stored in a newly created folder named using the current date and time, located at:
@@ -186,6 +191,12 @@ Generated Selenium WebDriver test automation scripts are stored in a newly creat
 ```
 test_cases/output/
 ```
+
+<div align="left">
+<img src="assets/AI_generated_output_files.png" width="400" height="150"/>
+</div>
+
+These output files can be found in the `test_cases/output` folder in this repository.
 
 ## ❗ Troubleshooting
 
