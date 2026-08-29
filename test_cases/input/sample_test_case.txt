@@ -1,22 +1,10 @@
-Title: Register a new User on the Parabank Demo Web application
+Title: Search for a Product on Home Page
 
-Precondition: User is on the registration page of the Parabank demo application
+Precondition: User is on the Home Page of the application
 
 Steps:
 1. Open Chrome browser
-2. Navigate to "https://parabank.parasoft.com/parabank/register.htm"
-3. Verify that the page heading "Signing up is easy!" is displayed.
-4. In the "First Name" field enter text "John"
-5. In the "Last Name" field enter text "Doe"
-6. In the "Address" field enter text "Mccaleine, 189, street"
-7. In the "City" field enter text "New York"
-8. In the "State" field enter text "Yorkshire"
-9. In the "Zip Code" field enter text "370788"
-10. In the "Phone #" field enter text "0789876778"
-11. In the "SSN" field  enter text "6673625143"
-12. In the "Username" field  enter text "johndoe123"
-13. In the "Password" field  enter text "Password123$"
-14. In th "Confirm" field enter "Password123$"
-15. Click "Register" button
-16. Assert that the Welcome heading - "Welcome johndoe123" is displayed.
-17. Assert that the text "Your account was created successfully. You are now logged in." is displayed.
+2. Navigate to https://ecommerce-playground.lambdatest.io/index.php
+3. Enter "iPhone" in the Search text box
+4. Click on the Search Button
+5. Add an assert statement to verify that the the product "iPhone" is displayed
