@@ -1,13 +1,13 @@
 # 🚀 AI-Powered Selenium Test Generator (OpenAI + Ollama)
 
+## Don't forget to give a :star: to make the project popular
+
 ## Generate **Selenium Java automation scripts** from plain English test cases using AI.
 
 This tool supports:
 
 * ✅ OpenAI (cloud-based, high quality)
 * ✅ Ollama (local, free & unlimited)
-
-### Don't forget to give a :star: to make the project popular
 
 ## 📌 Features
 
