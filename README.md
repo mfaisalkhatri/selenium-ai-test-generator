@@ -35,6 +35,7 @@ This tool supports:
 ├── config.py
 ├── tools.py
 ├── main.py
+├── logger.py
 ├── requirements.txt
 ├── .env
 ├── test_cases/
@@ -103,33 +104,39 @@ Edit the file:
 ```
 test_cases/input/sample_test_case.txt
 
-Title: Application Login scenario
+Title: Search for a Product on Home Page
 
-Precondition: User is registered in the application.
+Precondition: User is on the Home Page of the application
 
 Steps:
 1. Open Chrome browser
-2. Navigate to https://ecommerce-playground.lambdatest.io/index.php?route=account/login
-3. Enter "Johndoe881@email.com" in the E-Mail Address field
-4. Enter "Password@321" in the Password field
-5. Click on the Login Button
-5. Add an assert statement to check that "My Account" page is displayed.
+2. Navigate to https://ecommerce-playground.lambdatest.io/index.php
+3. Enter "iPhone" in the Search text box
+4. Click on the Search Button
+5. Add an assert statement to verify that the the product "iPhone" is displayed
 ```
+
 
 ## ⚡ Configuration
 
-Update `config.py` to choose your provider:
+Update `.env` to choose your provider:
 
 ### 👉 Use OpenAI
 
-```python
-provider = "openai"
+```env
+OPENAI_MODEL_NAME=<model name>
+OPENAI_MAX_TOKENS=<max tokens>
+OPENAI_TEMPERATURE=<temperature>
+OPENAI_API_KEY=<API Key>
 ```
 
 ### 👉 Use Ollama (Free, Local)
 
-```python
-provider = "ollama"
+```env
+OLLAMA_MODEL_NAME=<model name> e.g. qwen3:8b
+OLLAMA_TEMPERATURE=0.3
+OLLAMA_ENDPOINT=http://localhost:11434/api/generate
+OLLAMA_BASEURL=http://localhost:11434
 ```
 
 ## 🧠 Ollama Setup (Local Setup is required while using Ollama)
@@ -181,14 +188,6 @@ test_cases/output/
 ```
 
 ## ❗ Troubleshooting
-
-### 🔴 OpenAI Quota Error (429)
-
-* Switch to Ollama:
-
-```python
-provider = "ollama"
-```
 
 ### 🔴 Ollama Connection Error
 
