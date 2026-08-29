@@ -1,5 +1,7 @@
 # 🚀 AI-Powered Selenium Test Generator (OpenAI + Ollama)
 
+## Don't forget to give a :star: to make the project popular
+
 ## Generate **Selenium Java automation scripts** from plain English test cases using AI.
 
 This tool supports:
@@ -19,6 +21,13 @@ This tool supports:
 * Supports both **cloud and local LLMs**
 * Beginner-friendly and extensible
 
+## :writing_hand: Tutorial Blog Links
+- [How to Build an AI Agent to Generate Selenium WebDriver Tests in Java: A Practical Guide for Test Automation Engineers](https://medium.com/@iamfaisalkhatri/how-to-build-an-ai-agent-to-generate-selenium-webdriver-tests-in-java-a-practical-guide-for-test-6fbaf27c53cf)
+
+## 🎥 Tutorials 
+
+[![Watch the video](https://img.youtube.com/vi/YmukML3G2Wo/hqdefault.jpg)](https://youtu.be/YmukML3G2Wo)
+
 ## 🏗️ Project Structure
 
 ```
@@ -26,6 +35,7 @@ This tool supports:
 ├── config.py
 ├── tools.py
 ├── main.py
+├── logger.py
 ├── requirements.txt
 ├── .env
 ├── test_cases/
@@ -94,33 +104,39 @@ Edit the file:
 ```
 test_cases/input/sample_test_case.txt
 
-Title: Application Login scenario
+Title: Search for a Product on Home Page
 
-Precondition: User is registered in the application.
+Precondition: User is on the Home Page of the application
 
 Steps:
 1. Open Chrome browser
-2. Navigate to https://ecommerce-playground.lambdatest.io/index.php?route=account/login
-3. Enter "Johndoe881@email.com" in the E-Mail Address field
-4. Enter "Password@321" in the Password field
-5. Click on the Login Button
-5. Add an assert statement to check that "My Account" page is displayed.
+2. Navigate to https://ecommerce-playground.lambdatest.io/index.php
+3. Enter "iPhone" in the Search text box
+4. Click on the Search Button
+5. Add an assert statement to verify that the the product "iPhone" is displayed
 ```
+
 
 ## ⚡ Configuration
 
-Update `config.py` to choose your provider:
+Update `.env` to choose your provider:
 
 ### 👉 Use OpenAI
 
-```python
-provider = "openai"
+```env
+OPENAI_MODEL_NAME=<model name>
+OPENAI_MAX_TOKENS=<max tokens>
+OPENAI_TEMPERATURE=<temperature>
+OPENAI_API_KEY=<API Key>
 ```
 
 ### 👉 Use Ollama (Free, Local)
 
-```python
-provider = "ollama"
+```env
+OLLAMA_MODEL_NAME=<model name> e.g. qwen3:8b
+OLLAMA_TEMPERATURE=0.3
+OLLAMA_ENDPOINT=http://localhost:11434/api/generate
+OLLAMA_BASEURL=http://localhost:11434
 ```
 
 ## 🧠 Ollama Setup (Local Setup is required while using Ollama)
@@ -163,6 +179,11 @@ ollama run qwen3:8b
 python main.py
 ```
 
+<div align="left">
+<img src="assets/execution_details.png" width="400" height="150"/>
+</div>
+
+
 ## 📄 Output
 
 Generated Selenium WebDriver test automation scripts are stored in a newly created folder named using the current date and time, located at:
@@ -171,15 +192,13 @@ Generated Selenium WebDriver test automation scripts are stored in a newly creat
 test_cases/output/
 ```
 
+<div align="left">
+<img src="assets/AI_generated_output_files.png" width="400" height="150"/>
+</div>
+
+These output files can be found in the `test_cases/output` folder in this repository.
+
 ## ❗ Troubleshooting
-
-### 🔴 OpenAI Quota Error (429)
-
-* Switch to Ollama:
-
-```python
-provider = "ollama"
-```
 
 ### 🔴 Ollama Connection Error
 
@@ -207,5 +226,3 @@ pip install -r requirements.txt
 - Discuss your queries by writing to me @ `mohammadfaisalkhatri@gmail.com`
   OR ping me on any of the social media sites using the below link:
     - [Linktree](https://linktr.ee/faisalkhatri)
-
-### Don't forget to give a :star: to make the project popular
