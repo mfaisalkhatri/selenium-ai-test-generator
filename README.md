@@ -7,6 +7,8 @@ This tool supports:
 * ✅ OpenAI (cloud-based, high quality)
 * ✅ Ollama (local, free & unlimited)
 
+### Don't forget to give a :star: to make the project popular
+
 ## 📌 Features
 
 * Generate Selenium WebDriver scripts using **Java + TestNG**
@@ -18,6 +20,13 @@ This tool supports:
 * Config-driven architecture (switch models easily)
 * Supports both **cloud and local LLMs**
 * Beginner-friendly and extensible
+
+## :writing_hand: Tutorial Blog Links
+- [How to Build an AI Agent to Generate Selenium WebDriver Tests in Java: A Practical Guide for Test Automation Engineers](https://medium.com/@iamfaisalkhatri/how-to-build-an-ai-agent-to-generate-selenium-webdriver-tests-in-java-a-practical-guide-for-test-6fbaf27c53cf)
+
+## 🎥 Tutorials 
+
+[![Watch the video](https://img.youtube.com/vi/YmukML3G2Wo/hqdefault.jpg)](https://youtu.be/YmukML3G2Wo)
 
 ## 🏗️ Project Structure
 
@@ -207,5 +216,3 @@ pip install -r requirements.txt
 - Discuss your queries by writing to me @ `mohammadfaisalkhatri@gmail.com`
   OR ping me on any of the social media sites using the below link:
     - [Linktree](https://linktr.ee/faisalkhatri)
-
-### Don't forget to give a :star: to make the project popular
